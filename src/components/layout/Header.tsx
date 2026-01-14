@@ -5,7 +5,6 @@ import { logoutUser } from '@/features/auth/authSlice';
 import { Logo } from '../Logo';
 import { Avatar } from '../ui/Avatar';
 import { ThemeToggle } from '@/features/theme/ThemeToggle';
-import { Button } from '../ui/Button';
 import { LogOut, Settings, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
@@ -36,7 +35,7 @@ export const Header: React.FC = () => {
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          
+
           <div className="relative" ref={menuRef}>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}

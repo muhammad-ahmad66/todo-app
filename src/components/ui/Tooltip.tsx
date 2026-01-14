@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useClickOutside } from '@/hooks/useClickOutside';
 
 interface TooltipProps {
   content: string;
@@ -16,7 +15,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   delay = 200,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = () => {

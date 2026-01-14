@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useAppSelector } from '@/store/hooks';
 import { Card } from '@/components/ui/Card';
-import { ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { TODO_PRIORITIES } from '@/utils/constants';
 
 const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444'];
@@ -32,7 +32,7 @@ export const AnalyticsCharts: React.FC = () => {
               fill="#8884d8"
               dataKey="value"
             >
-              {priorityData.map((entry, index) => (
+              {priorityData.map((_entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { createTodo, updateTodo } from './todosSlice';
-import { Todo } from '@/types/todo.types';
+import { Todo, TodoStatus, TodoPriority } from '@/types/todo.types';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Dropdown } from '@/components/ui/Dropdown';
@@ -66,7 +66,7 @@ export const AddTodoForm: React.FC<AddTodoFormProps> = ({ isOpen, onClose, todo 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!userId) return;
 
     const validationErrors = validateTodo(formData.title, formData.description);
@@ -86,7 +86,7 @@ export const AddTodoForm: React.FC<AddTodoFormProps> = ({ isOpen, onClose, todo 
           categoryColor,
         },
       }));
-      
+
       if (updateTodo.fulfilled.match(result)) {
         showToast.success('Todo updated successfully!');
         onClose();
@@ -107,7 +107,7 @@ export const AddTodoForm: React.FC<AddTodoFormProps> = ({ isOpen, onClose, todo 
           subtasks: [],
         },
       }));
-      
+
       if (createTodo.fulfilled.match(result)) {
         showToast.success('Todo created successfully!');
         onClose();
@@ -174,7 +174,7 @@ export const AddTodoForm: React.FC<AddTodoFormProps> = ({ isOpen, onClose, todo 
             <Dropdown
               options={statusOptions}
               value={formData.status}
-              onChange={(value) => setFormData((prev) => ({ ...prev, status: value }))}
+              onChange={(value) => setFormData((prev) => ({ ...prev, status: value as TodoStatus }))}
             />
           </div>
 
@@ -185,7 +185,7 @@ export const AddTodoForm: React.FC<AddTodoFormProps> = ({ isOpen, onClose, todo 
             <Dropdown
               options={priorityOptions}
               value={formData.priority}
-              onChange={(value) => setFormData((prev) => ({ ...prev, priority: value }))}
+              onChange={(value) => setFormData((prev) => ({ ...prev, priority: value as TodoPriority }))}
             />
           </div>
         </div>

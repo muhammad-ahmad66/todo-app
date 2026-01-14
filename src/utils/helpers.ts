@@ -15,8 +15,8 @@ export const debounce = <T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {
-  let timeout: NodeJS.Timeout | null = null;
-  
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+
   return (...args: Parameters<T>) => {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -52,29 +52,29 @@ export const filterTodos = (
     if (filters.status && filters.status !== 'all' && todo.status !== filters.status) {
       return false;
     }
-    
+
     if (filters.priority && filters.priority !== 'all' && todo.priority !== filters.priority) {
       return false;
     }
-    
+
     if (filters.category && filters.category !== 'all' && todo.category !== filters.category) {
       return false;
     }
-    
+
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
       const matchesTitle = todo.title.toLowerCase().includes(searchLower);
       const matchesDescription = todo.description?.toLowerCase().includes(searchLower) || false;
       const matchesTags = todo.tags?.some(tag => tag.toLowerCase().includes(searchLower)) || false;
-      
+
       if (!matchesTitle && !matchesDescription && !matchesTags) {
         return false;
       }
     }
-    
+
     if (filters.dueDate && filters.dueDate !== 'all') {
       if (!todo.dueDate) return false;
-      
+
       const due = parseISO(todo.dueDate);
       switch (filters.dueDate) {
         case 'today':
@@ -91,7 +91,7 @@ export const filterTodos = (
           break;
       }
     }
-    
+
     return true;
   });
 };
@@ -106,7 +106,7 @@ export const sortTodos = (
   const sorted = [...todos].sort((a, b) => {
     let aValue: any;
     let bValue: any;
-    
+
     switch (sortBy.field) {
       case 'title':
         aValue = a.title.toLowerCase();
@@ -133,12 +133,12 @@ export const sortTodos = (
       default:
         return 0;
     }
-    
+
     if (aValue < bValue) return sortBy.order === 'asc' ? -1 : 1;
     if (aValue > bValue) return sortBy.order === 'asc' ? 1 : -1;
     return 0;
   });
-  
+
   return sorted;
 };
 
@@ -152,23 +152,23 @@ export const calculateStreak = (todos: Todo[]): { current: number; longest: numb
       date: format(parseISO(t.completedAt!), 'yyyy-MM-dd'),
     }))
     .sort((a, b) => b.date.localeCompare(a.date));
-  
+
   const uniqueDates = [...new Set(completedTodos.map(t => t.date))];
-  
+
   if (uniqueDates.length === 0) return { current: 0, longest: 0 };
-  
+
   // Calculate current streak
   let current = 0;
   const today = format(new Date(), 'yyyy-MM-dd');
   const yesterday = format(new Date(Date.now() - 86400000), 'yyyy-MM-dd');
-  
+
   if (uniqueDates.includes(today) || uniqueDates.includes(yesterday)) {
     current = 1;
     for (let i = 1; i < uniqueDates.length; i++) {
       const prevDate = new Date(uniqueDates[i - 1]);
       const currDate = new Date(uniqueDates[i]);
       const diffDays = Math.floor((prevDate.getTime() - currDate.getTime()) / (1000 * 60 * 60 * 24));
-      
+
       if (diffDays === 1) {
         current++;
       } else {
@@ -176,7 +176,7 @@ export const calculateStreak = (todos: Todo[]): { current: number; longest: numb
       }
     }
   }
-  
+
   // Calculate longest streak
   let longest = 1;
   let maxLongest = 1;
@@ -184,7 +184,7 @@ export const calculateStreak = (todos: Todo[]): { current: number; longest: numb
     const prevDate = new Date(uniqueDates[i - 1]);
     const currDate = new Date(uniqueDates[i]);
     const diffDays = Math.floor((prevDate.getTime() - currDate.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays === 1) {
       longest++;
       maxLongest = Math.max(maxLongest, longest);
@@ -192,7 +192,7 @@ export const calculateStreak = (todos: Todo[]): { current: number; longest: numb
       longest = 1;
     }
   }
-  
+
   return { current, longest: maxLongest };
 };
 
