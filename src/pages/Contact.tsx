@@ -4,7 +4,7 @@ import { Breadcrumb } from '@/components/layout/Breadcrumb';
 import { Card } from '@/components/ui/Card';
 import { Typography } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
-import { Mail, Phone, MapPin, ExternalLink, Linkedin, MessageCircle, Briefcase } from 'lucide-react';
+import { Mail, MapPin, ExternalLink, Linkedin, MessageCircle, Briefcase } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Contact: React.FC = () => {

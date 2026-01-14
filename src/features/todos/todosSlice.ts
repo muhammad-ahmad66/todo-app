@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Todo, TodoStatus, TodoPriority, Subtask } from '@/types/todo.types';
+import { Todo, Subtask } from '@/types/todo.types';
 import { userStorage } from '@/utils/storage';
 import { generateId } from '@/utils/helpers';
 import { logoutUser } from '../auth/authSlice';

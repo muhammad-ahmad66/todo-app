@@ -56,7 +56,7 @@ export const Analytics: React.FC = () => {
                 fill="#8884d8"
                 dataKey="value"
               >
-                {priorityData.map((entry, index) => (
+                {priorityData.map((_entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>

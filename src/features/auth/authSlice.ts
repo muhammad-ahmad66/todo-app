@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, User, LoginCredentials, SignupCredentials } from '@/types/auth.types';
 import { userApi } from '@/api/user/userApi';
 import { usersStorage } from '@/utils/storage';
-import { generateId } from '@/utils/helpers';
 import { loadTodos } from '../todos/todosSlice';
 
 const initialState: AuthState = {

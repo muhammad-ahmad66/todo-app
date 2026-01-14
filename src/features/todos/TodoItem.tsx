@@ -73,118 +73,119 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onEdit }) => {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      <Card
-        className={clsx(
-          'transition-all duration-200 cursor-pointer',
-          isSelected && 'ring-2 ring-primary-500',
-          overdue && 'border-red-300 dark:border-red-700',
-          todo.status === 'completed' && 'opacity-75'
-        )}
-        padding="md"
-        hover
-        onClick={handleToggleSelect}
-      >
-        <div className="flex items-start gap-4">
-          <Tooltip content={todo.status === 'completed' ? 'Mark as pending' : 'Mark as complete'} position="top">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleToggleComplete();
-              }}
-              className="mt-0.5 flex-shrink-0"
-            >
-              {todo.status === 'completed' ? (
-                <CheckCircle2 className="w-5 h-5 text-green-500" />
-              ) : (
-                <Circle className="w-5 h-5 text-gray-400 hover:text-primary-500 transition-colors" />
-              )}
-            </button>
-          </Tooltip>
+      <div onClick={handleToggleSelect}>
+        <Card
+          className={clsx(
+            'transition-all duration-200 cursor-pointer',
+            isSelected && 'ring-2 ring-primary-500',
+            overdue && 'border-red-300 dark:border-red-700',
+            todo.status === 'completed' && 'opacity-75'
+          )}
+          padding="md"
+          hover
+        >
+          <div className="flex items-start gap-4">
+            <Tooltip content={todo.status === 'completed' ? 'Mark as pending' : 'Mark as complete'} position="top">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleToggleComplete();
+                }}
+                className="mt-0.5 flex-shrink-0"
+              >
+                {todo.status === 'completed' ? (
+                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                ) : (
+                  <Circle className="w-5 h-5 text-gray-400 hover:text-primary-500 transition-colors" />
+                )}
+              </button>
+            </Tooltip>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2">
-              <div className="flex-1">
-                <h3
-                  className={clsx(
-                    'font-semibold text-gray-900 dark:text-gray-100',
-                    todo.status === 'completed' && 'line-through text-gray-500 dark:text-gray-400'
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex-1">
+                  <h3
+                    className={clsx(
+                      'font-semibold text-gray-900 dark:text-gray-100',
+                      todo.status === 'completed' && 'line-through text-gray-500 dark:text-gray-400'
+                    )}
+                  >
+                    {todo.title}
+                  </h3>
+                  {todo.description && (
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                      {todo.description}
+                    </p>
                   )}
-                >
-                  {todo.title}
-                </h3>
-                {todo.description && (
-                  <p className="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                    {todo.description}
-                  </p>
+                </div>
+
+                {isHovered && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="flex items-center gap-2"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleEdit}
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleDelete}
+                      className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </motion.div>
                 )}
               </div>
 
-              {isHovered && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="flex items-center gap-2"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleEdit}
-                  >
-                    <Edit2 className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleDelete}
-                    className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </motion.div>
-              )}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 mt-3">
-              <Badge variant={status?.color as any} size="sm">
-                {status?.label}
-              </Badge>
-              <Badge
-                variant={priority?.color as any}
-                size="sm"
-                className="flex items-center gap-1"
-              >
-                <span>{priority?.icon}</span>
-                {formatPriority(todo.priority)}
-              </Badge>
-              {todo.category && (
-                <Badge variant="info" size="sm">
-                  {todo.category}
+              <div className="flex flex-wrap items-center gap-2 mt-3">
+                <Badge variant={status?.color as any} size="sm">
+                  {status?.label}
                 </Badge>
-              )}
-              {todo.dueDate && (
-                <div className={clsx(
-                  'flex items-center gap-1 text-xs',
-                  overdue ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
-                )}>
-                  {overdue ? (
-                    <AlertCircle className="w-3 h-3" />
-                  ) : (
-                    <Calendar className="w-3 h-3" />
-                  )}
-                  {formatSmartDate(todo.dueDate)}
+                <Badge
+                  variant={priority?.color as any}
+                  size="sm"
+                  className="flex items-center gap-1"
+                >
+                  <span>{priority?.icon}</span>
+                  {formatPriority(todo.priority)}
+                </Badge>
+                {todo.category && (
+                  <Badge variant="info" size="sm">
+                    {todo.category}
+                  </Badge>
+                )}
+                {todo.dueDate && (
+                  <div className={clsx(
+                    'flex items-center gap-1 text-xs',
+                    overdue ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
+                  )}>
+                    {overdue ? (
+                      <AlertCircle className="w-3 h-3" />
+                    ) : (
+                      <Calendar className="w-3 h-3" />
+                    )}
+                    {formatSmartDate(todo.dueDate)}
+                  </div>
+                )}
+              </div>
+
+              {todo.subtasks && todo.subtasks.length > 0 && (
+                <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                  {todo.subtasks.filter(s => s.completed).length} / {todo.subtasks.length} subtasks completed
                 </div>
               )}
             </div>
-
-            {todo.subtasks && todo.subtasks.length > 0 && (
-              <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                {todo.subtasks.filter(s => s.completed).length} / {todo.subtasks.length} subtasks completed
-              </div>
-            )}
           </div>
-        </div>
-      </Card>
+        </Card>
+      </div>
     </motion.div>
   );
 };

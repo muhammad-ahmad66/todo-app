@@ -9,7 +9,7 @@ import { User } from '../types/auth.types';
 export const storage = {
   get: <T>(key: string, defaultValue: T | null = null): T | null => {
     if (typeof window === 'undefined') return defaultValue;
-    
+
     try {
       const item = localStorage.getItem(key);
       if (item === null) return defaultValue;
@@ -22,7 +22,7 @@ export const storage = {
 
   set: <T>(key: string, value: T): void => {
     if (typeof window === 'undefined') return;
-    
+
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
@@ -47,11 +47,11 @@ export const storage = {
 export const userStorage = {
   getTodos: (userId: string): Todo[] => {
     const allTodos = storage.get<Record<string, Todo[]>>(STORAGE_KEYS.TODOS, {});
-    return allTodos[userId] || [];
+    return (allTodos && allTodos[userId]) || [];
   },
 
   setTodos: (userId: string, todos: Todo[]): void => {
-    const allTodos = storage.get<Record<string, Todo[]>>(STORAGE_KEYS.TODOS, {});
+    const allTodos = storage.get<Record<string, Todo[]>>(STORAGE_KEYS.TODOS, {}) || {};
     allTodos[userId] = todos;
     storage.set(STORAGE_KEYS.TODOS, allTodos);
   },
@@ -89,7 +89,7 @@ export const userStorage = {
  */
 export const usersStorage = {
   getAll: (): Record<string, User> => {
-    return storage.get<Record<string, User>>(STORAGE_KEYS.USERS, {});
+    return storage.get<Record<string, User>>(STORAGE_KEYS.USERS, {}) || {};
   },
 
   get: (userId: string): User | null => {
@@ -116,8 +116,8 @@ export const usersStorage = {
 export const backupStorage = {
   create: (): { todos: Record<string, Todo[]>, users: Record<string, User>, timestamp: string } => {
     return {
-      todos: storage.get<Record<string, Todo[]>>(STORAGE_KEYS.TODOS, {}),
-      users: usersStorage.getAll(),
+      todos: storage.get<Record<string, Todo[]>>(STORAGE_KEYS.TODOS, {}) || {},
+      users: usersStorage.getAll() || {},
       timestamp: new Date().toISOString(),
     };
   },
@@ -130,7 +130,7 @@ export const backupStorage = {
   restore: (): boolean => {
     const backup = storage.get<{ todos: Record<string, Todo[]>, users: Record<string, User>, timestamp: string }>(STORAGE_KEYS.BACKUP, null);
     if (!backup) return false;
-    
+
     storage.set(STORAGE_KEYS.TODOS, backup.todos);
     storage.set(STORAGE_KEYS.USERS, backup.users);
     return true;

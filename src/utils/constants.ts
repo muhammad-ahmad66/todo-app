@@ -41,14 +41,23 @@ export const API_ENDPOINTS = {
   },
 } as const;
 
-export const TODO_STATUSES: Array<{ value: import('../types/todo.types').TodoStatus; label: string; color: string }> = [
+export const TODO_STATUSES: Array<{
+  value: import('../types/todo.types').TodoStatus;
+  label: string;
+  color: string;
+}> = [
   { value: 'pending', label: 'Pending', color: 'gray' },
   { value: 'in-progress', label: 'In Progress', color: 'blue' },
   { value: 'completed', label: 'Completed', color: 'green' },
   { value: 'archived', label: 'Archived', color: 'purple' },
 ];
 
-export const TODO_PRIORITIES: Array<{ value: import('../types/todo.types').TodoPriority; label: string; color: string; icon: string }> = [
+export const TODO_PRIORITIES: Array<{
+  value: import('../types/todo.types').TodoPriority;
+  label: string;
+  color: string;
+  icon: string;
+}> = [
   { value: 'low', label: 'Low', color: 'gray', icon: '↓' },
   { value: 'medium', label: 'Medium', color: 'yellow', icon: '→' },
   { value: 'high', label: 'High', color: 'orange', icon: '↑' },
@@ -67,18 +76,90 @@ export const CATEGORIES = [
 ];
 
 export const ACHIEVEMENTS = [
-  { id: 'first_todo', title: 'First Step', description: 'Create your first todo', icon: '🎯', target: 1 },
-  { id: 'ten_todos', title: 'Getting Started', description: 'Create 10 todos', icon: '✨', target: 10 },
-  { id: 'fifty_todos', title: 'Productive', description: 'Create 50 todos', icon: '🚀', target: 50 },
-  { id: 'hundred_todos', title: 'Power User', description: 'Create 100 todos', icon: '💪', target: 100 },
-  { id: 'first_complete', title: 'Done!', description: 'Complete your first todo', icon: '✅', target: 1 },
-  { id: 'ten_complete', title: 'On a Roll', description: 'Complete 10 todos', icon: '🔥', target: 10 },
-  { id: 'fifty_complete', title: 'Achiever', description: 'Complete 50 todos', icon: '🏆', target: 50 },
-  { id: 'hundred_complete', title: 'Champion', description: 'Complete 100 todos', icon: '👑', target: 100 },
-  { id: 'streak_3', title: 'Hot Streak', description: '3 day completion streak', icon: '🔥', target: 3 },
-  { id: 'streak_7', title: 'Week Warrior', description: '7 day completion streak', icon: '⭐', target: 7 },
-  { id: 'streak_30', title: 'Month Master', description: '30 day completion streak', icon: '🌟', target: 30 },
-  { id: 'zero_inbox', title: 'Inbox Zero', description: 'Complete all pending todos', icon: '🎉', target: 1 },
+  {
+    id: 'first_todo',
+    title: 'First Step',
+    description: 'Create your first todo',
+    icon: '🎯',
+    target: 1,
+  },
+  {
+    id: 'ten_todos',
+    title: 'Getting Started',
+    description: 'Create 10 todos',
+    icon: '✨',
+    target: 10,
+  },
+  {
+    id: 'fifty_todos',
+    title: 'Productive',
+    description: 'Create 50 todos',
+    icon: '🚀',
+    target: 50,
+  },
+  {
+    id: 'hundred_todos',
+    title: 'Power User',
+    description: 'Create 100 todos',
+    icon: '💪',
+    target: 100,
+  },
+  {
+    id: 'first_complete',
+    title: 'Done!',
+    description: 'Complete your first todo',
+    icon: '✅',
+    target: 1,
+  },
+  {
+    id: 'ten_complete',
+    title: 'On a Roll',
+    description: 'Complete 10 todos',
+    icon: '🔥',
+    target: 10,
+  },
+  {
+    id: 'fifty_complete',
+    title: 'Achiever',
+    description: 'Complete 50 todos',
+    icon: '🏆',
+    target: 50,
+  },
+  {
+    id: 'hundred_complete',
+    title: 'Champion',
+    description: 'Complete 100 todos',
+    icon: '👑',
+    target: 100,
+  },
+  {
+    id: 'streak_3',
+    title: 'Hot Streak',
+    description: '3 day completion streak',
+    icon: '🔥',
+    target: 3,
+  },
+  {
+    id: 'streak_7',
+    title: 'Week Warrior',
+    description: '7 day completion streak',
+    icon: '⭐',
+    target: 7,
+  },
+  {
+    id: 'streak_30',
+    title: 'Month Master',
+    description: '30 day completion streak',
+    icon: '🌟',
+    target: 30,
+  },
+  {
+    id: 'zero_inbox',
+    title: 'Inbox Zero',
+    description: 'Complete all pending todos',
+    icon: '🎉',
+    target: 1,
+  },
 ];
 
 export const KEYBOARD_SHORTCUTS = {
